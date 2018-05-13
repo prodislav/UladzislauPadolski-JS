@@ -1,13 +1,20 @@
 'use strict';
-const main = (document => {
+let appendPlace = 'body';
+
+const main = function(appendPlace) {
+    document.addEventListener("DOMContentLoaded", function(){
+        init(appendPlace);
+    }, false);
+
     let date = new Date();
     let currentMonth = date.getMonth();
     let currentYear = date.getFullYear();
     let temp = new Date(currentYear, currentMonth + 1, 0);
     let lastDay = temp.getDate();
 
-    Date.prototype.daysInMonth = function () {
-        return 32 - new Date(this.getFullYear(), this.getMonth(), 32).getDate();
+    function daysInMonth(date) {
+        let days = 32 - new Date(this.getFullYear(), this.getMonth(), 32).getDate();
+        return days;
     };
 
     const daysName = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
@@ -26,18 +33,19 @@ const main = (document => {
         'December'
     ];
 
-    window.onload = function () {
+    function init(appendPlace) {
         const datepicker = showElements();
-        document.body.appendChild(datepicker);
+        let wrapper = document.querySelector(appendPlace);
+        wrapper.appendChild(datepicker);
         createDatePicker();
-    };
+    }
 
     function bindEvents(block) {
         const rightButton = block.querySelector('.vp-datepicker__button-next');
         const leftButton = block.querySelector('.vp-datepicker__button-prev');
         rightButton.addEventListener("click", generateNextMonth);
         leftButton.addEventListener("click", generatePrevMonth);
-    };
+    }
 
     function createElement(tag, props, ...children) {
         const element = document.createElement(tag);
@@ -51,7 +59,7 @@ const main = (document => {
             })
         }
         return element;
-    };
+    }
 
     function createDatePicker() {
         let currentDay = new Date(currentYear, currentMonth, 1);
@@ -67,6 +75,9 @@ const main = (document => {
             while (i < 6) {
                 let weekDay = document.createElement('div');
                 weekDay.className = 'vp-datepicker__week-day';
+                if (currentDay.toDateString() === date.toDateString()){
+                    weekDay.classList.add('today');
+                }
                 if (a === 0) {
                     if (i < t) {
                         weekDay.innerHTML = '';
@@ -74,6 +85,7 @@ const main = (document => {
                         weekDay.innerHTML = currentDay.getDate().toString();
                         currentDay.setDate(currentDay.getDate() + 1);
                     }
+
                 } else {
                     if (currentDay.getDate() === lastDay) {
                         weekDay.innerHTML = currentDay.getDate().toString();
@@ -90,7 +102,7 @@ const main = (document => {
             document.querySelector('.vp-datepicker__weeks').appendChild(week);
             a++;
         }
-    };
+    }
 
     function showElements() {
         const prevBut = createElement('div', {
@@ -107,7 +119,7 @@ const main = (document => {
         });
         const weeks = createElement('div', {
             className: 'vp-datepicker__weeks'
-        })
+        });
         for (let day of daysName) {
             const dayName = createElement('div', {
                 className: 'vp-datepicker__day'
@@ -130,27 +142,25 @@ const main = (document => {
         bindEvents(block);
 
         return block;
-    };
+    }
+
+    function deleteMonth() {
+        if (document.querySelector('.vp-datepicker')) {
+            document.body.removeChild(document.querySelector('.vp-datepicker'));
+        }
+    }
 
     function generatePrevMonth() {
-        if (document.querySelector('.vp-datepicker')) {
-            document.body.removeChild(document.querySelector('.vp-datepicker'));
-        }
+        deleteMonth();
         prevMonth();
-        const datepicker = showElements();
-        document.body.appendChild(datepicker);
-        createDatePicker();
-    };
+        init(appendPlace);
+    }
 
     function generateNextMonth() {
-        if (document.querySelector('.vp-datepicker')) {
-            document.body.removeChild(document.querySelector('.vp-datepicker'));
-        }
+        deleteMonth();
         nextMonth();
-        const datepicker = showElements();
-        document.body.appendChild(datepicker);
-        createDatePicker();
-    };
+        init(appendPlace);
+    }
 
     function nextMonth() {
         if (currentMonth === 11) {
@@ -159,7 +169,7 @@ const main = (document => {
         } else {
             currentMonth++;
         }
-    };
+    }
 
     function prevMonth() {
         if (currentMonth === 0) {
@@ -168,8 +178,8 @@ const main = (document => {
         } else {
             currentMonth--;
         }
-    };
+    }
 
-})(document);
+};
 
-main();
+main(appendPlace);

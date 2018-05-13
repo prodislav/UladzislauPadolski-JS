@@ -45,6 +45,10 @@
     transition: 0.2s ease-in-out;
 }
 
+.today{
+    background-color: #ffdd9d;
+}
+
 .vp-datepicker__days {
     width: 97%;
     font-family: Arial;
@@ -74,13 +78,6 @@
 .vp-datepicker__week-day {
     width: 41px;
     text-align: center;
-}
-
-.vp-datepicker__week-day:hover{
-    background-color: #ffdd9d;
-    border-color: #ffcd6f;
-    transition: 0.2s ease-in-out;
-    cursor: pointer;
 }
 
 .vp-week-day_hidden{

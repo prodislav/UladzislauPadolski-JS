@@ -1,0 +1,87 @@
+.vp-datepicker__el {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vp-datepicker__field {
+    width: 300px;
+    height: 280px;
+    display: flex;
+    flex-flow: column wrap;
+    line-height: 180%;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #FAFAFA;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+}
+
+.vp-datepicker__title {
+    display: flex;
+    width: 95%;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.vp-datepicker__date {
+    line-height: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.vp-datepicker__button {
+    margin: 0 15px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 50px;
+    font-size: 15px;
+    color: #9b9b9b;
+}
+
+.vp-datepicker__button:hover {
+    color: #ffd17c;
+    transition: 0.2s ease-in-out;
+}
+
+.today{
+    background-color: #ffdd9d;
+}
+
+.vp-datepicker__days {
+    width: 97%;
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+}
+
+.vp-datepicker__day {
+    width: 12.5%;
+    text-align: center;
+}
+
+.vp-datepicker__weeks {
+    display: flex;
+    flex-wrap: wrap;
+    width: 97%;
+}
+
+.vp-datepicker__week {
+    display: flex;
+    background-color: #FAFAFA;
+    margin: 2px 0;
+    width: 100%;
+}
+
+.vp-datepicker__week-day {
+    width: 41px;
+    text-align: center;
+}
+
+.vp-week-day_hidden{
+    visibility: hidden;
+}

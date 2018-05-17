@@ -1,20 +1,17 @@
 'use strict';
 let appendPlace = 'body';
 
-const main = function(appendPlace) {
-    document.addEventListener("DOMContentLoaded", function(){
+const main = function (appendPlace) {
+    document.addEventListener("DOMContentLoaded", function () {
         init(appendPlace);
     }, false);
 
     let date = new Date();
     let currentMonth = date.getMonth();
     let currentYear = date.getFullYear();
-    let temp = new Date(currentYear, currentMonth + 1, 0);
-    let lastDay = temp.getDate();
 
-    function daysInMonth(date) {
-        let days = 32 - new Date(this.getFullYear(), this.getMonth(), 32).getDate();
-        return days;
+    Date.prototype.daysInMonth = function () {
+        return 32 - new Date(this.getFullYear(), this.getMonth(), 32).getDate();
     };
 
     const daysName = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
@@ -62,45 +59,26 @@ const main = function(appendPlace) {
     }
 
     function createDatePicker() {
-        let currentDay = new Date(currentYear, currentMonth, 1);
-        let t = currentDay.getDay() - 1;
-        if (t < 0) {
-            t = 6;
+        const today = new Date();
+        const date = new Date(currentYear, currentMonth, 1);
+        for (let i = 0; i < date.getDay(); i++) {
+            let day = createElement('div', {
+                className: 'vp-datepicker__week-day'
+            }, '');
+            document.querySelector('.vp-datepicker__weeks').appendChild(day);
         }
-        let a = 0;
-        while (currentDay.getMonth() === currentMonth) {
-            let week = document.createElement('div');
-            week.className = 'vp-datepicker__week';
-            let i = -1;
-            while (i < 6) {
-                let weekDay = document.createElement('div');
-                weekDay.className = 'vp-datepicker__week-day';
-                if (currentDay.toDateString() === date.toDateString()){
-                    weekDay.classList.add('today');
-                }
-                if (a === 0) {
-                    if (i < t) {
-                        weekDay.innerHTML = '';
-                    } else {
-                        weekDay.innerHTML = currentDay.getDate().toString();
-                        currentDay.setDate(currentDay.getDate() + 1);
-                    }
 
-                } else {
-                    if (currentDay.getDate() === lastDay) {
-                        weekDay.innerHTML = currentDay.getDate().toString();
-                        currentDay.setDate(currentDay.getDate() + 1);
-                        week.appendChild(weekDay);
-                        break;
-                    }
-                    weekDay.innerHTML = currentDay.getDate().toString();
-                    currentDay.setDate(currentDay.getDate() + 1);
-                }
-                week.appendChild(weekDay);
-                i++;
+        for (let i = 0; i < date.daysInMonth(); i++) {
+            let day = createElement(
+                'div',
+                {
+                    className: 'vp-datepicker__week-day'
+                },
+                '' + (i + 1) + '');
+            document.querySelector('.vp-datepicker__weeks').appendChild(day);
+            if (i + 1 === today.getDate() && today.getFullYear() === currentYear && today.getMonth() === currentMonth) {
+                day.classList.add('today');
             }
-            document.querySelector('.vp-datepicker__weeks').appendChild(week);
-            a++;
         }
     }
 

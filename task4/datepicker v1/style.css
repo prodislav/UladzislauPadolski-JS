@@ -65,6 +65,8 @@
 }
 
 .vp-datepicker__weeks {
+    display: flex;
+    flex-wrap: wrap;
     width: 97%;
 }
 
